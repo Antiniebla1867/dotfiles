@@ -1,0 +1,14 @@
+# Nvim
+.config/nvim/.local/
+.config/nvim/plugged/
+.config/nvim/site/
+.config/nvim/lazy/
+.config/nvim/swap/
+.config/nvim/undo/
+.config/nvim/backup/
+
+# General
+*.swp
+*.swo
+*~
+.cache/
