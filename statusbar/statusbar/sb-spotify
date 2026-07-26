@@ -1,0 +1,12 @@
+#!/bin/sh
+
+status="$(playerctl --player=spotifyd status 2>/dev/null)"
+
+case "$status" in
+    Playing|Paused)
+        playerctl --player=spotifyd metadata --format '{{artist}} - {{title}}' 2>/dev/null | cut -c1-40
+        ;;
+    *)
+        printf '-'
+        ;;
+esac

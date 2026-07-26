@@ -1,0 +1,10 @@
+#!/bin/sh
+
+awk '
+/Active:/ {
+    mb = $2 / 1024
+    if (mb >= 1024)
+        printf "%.1fG", mb / 1024
+    else
+        printf "%.0fM", mb
+}' /proc/meminfo

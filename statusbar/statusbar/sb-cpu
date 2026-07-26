@@ -1,0 +1,21 @@
+#!/bin/sh
+
+STATE="/tmp/.sb-cpu"
+
+read -r _ user nice system idle iowait irq softirq steal _ < /proc/stat
+
+total=$((user + nice + system + idle + iowait + irq + softirq + steal))
+busy=$((total - idle - iowait))
+
+if [ -f "$STATE" ]; then
+    read -r old_total old_busy < "$STATE"
+    dt=$((total - old_total))
+    db=$((busy - old_busy))
+
+    if [ "$dt" -gt 0 ]; then
+        usage=$((100 * db / dt))
+        printf '%s%%' "$usage"
+    fi
+fi
+
+printf '%s %s\n' "$total" "$busy" > "$STATE"

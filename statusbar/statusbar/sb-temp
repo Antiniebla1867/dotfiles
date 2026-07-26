@@ -1,0 +1,15 @@
+#!/bin/sh
+
+for z in /sys/class/thermal/thermal_zone*/temp; do
+    [ -r "$z" ] || continue
+    t="$(cat "$z" 2>/dev/null)"
+    case "$t" in
+        ''|*[!0-9]*) continue ;;
+    esac
+    if [ "$t" -gt 1000 ]; then
+        printf '%s°C' "$((t / 1000))"
+        exit 0
+    fi
+done
+
+printf '-'
